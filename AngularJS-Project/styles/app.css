@@ -1,0 +1,38 @@
+body {
+    margin-top: 60px;
+}
+
+
+.margin-bottom-100 {
+    margin-bottom: 100px;
+}
+
+.hidden-element {
+    display: none;
+}
+
+.disabled-button {
+    opacity: 0.5;
+}
+
+.small-image {
+    width: 250px;
+}
+
+input.ng-invalid.ng-dirty {
+    background-color: pink;
+}
+
+
+
+h3 {
+    margin-left: 150px;
+}
+
+#loginBtn{
+    margin-left: 150px;
+}
+
+#registerBtn{
+    margin-left: 150px;
+}
