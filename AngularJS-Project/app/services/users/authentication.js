@@ -1,48 +1,63 @@
-/**
- * Created by ILIYA on 4/11/2016.
- */
-angular.module('issueTracking.users.authentication', [])
-    .factory('$authentication', [
-        '$http',
-        '$q',
-        'BASE_URL',
-        function($http, $q, BASE_URL) {
+'use strict';
 
-            function registerUser(user) {
-                var deferred = $q.defer();
+app.factory('authentication', function ($http, baseServiceUrl, $localStorage) {
+    var authentication = {};
 
-                $http.post(BASE_URL + 'Account/Register', user)
-                    .then(function(response) {
-                        deferred.resolve(response.data);
-                    }, function(error) {
+    authentication.setCredentials = function (serverData) {
+        $localStorage.currentUser = serverData;
+    };
 
-                    });
+    authentication.clearCredentials = function () {
+        $localStorage.$reset();
+    };
 
-                return deferred.promise;
+    authentication.isLoggedIn = function () {
+        return $localStorage.currentUser != undefined;
+    };
+
+    authentication.getHeaders = function () {
+        return {
+            Authorization: "Bearer " + $localStorage.currentUser.access_token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        };
+    };
+
+    authentication.getCurrentUserData = function () {
+        return $http({
+            method: 'GET',
+            url: baseServiceUrl + '/me',
+            headers: this.getHeaders()
+        })
+    };
+
+    authentication.login = function (userData) {
+        return $http({
+            method: 'POST',
+            url: baseServiceUrl + '/Token',
+            data: "userName=" + userData.username + "&password=" + userData.password +
+            "&grant_type=password"
+        })
+    };
+
+    authentication.register = function (userData) {
+        return $http({
+            method: 'POST',
+            url: baseServiceUrl + '/Account/register',
+            data: {
+                Email:userData.regEmail,
+                Password: userData.regPassword,
+                ConfirmPassword: userData.confirmPassword
             }
+        })
+    };
 
-            function loginUser(user) {
-                user.grant_type = 'password';
-                var deferred = $q.defer();
+    authentication.logout = function () {
+        return $http({
+            method: 'POST',
+            url: baseServiceUrl + '/Account/logout',
+            headers: this.getHeaders()
+        });
+    };
 
-                $http({
-                    url: BASE_URL + 'Token',
-                    method: 'POST',
-                    data: "userName=" + user.username + "&password=" + user.password +
-                    "&grant_type=password"
-                }).then(function (response) {
-                },function (error) {});
-
-                return deferred.promise;
-            }
-
-            function logout() {
-
-            }
-
-            return {
-                registerUser: registerUser,
-                loginUser: loginUser,
-                logout: logout
-            }
-        }]);
+    return authentication;
+});
