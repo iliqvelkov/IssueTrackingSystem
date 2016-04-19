@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html lang="en" ng-app="issueTracking" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html lang="en" ng-app="issueTracking" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html lang="en" ng-app="issueTracking" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="issueTracking" class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="issueTracking" ng-controller="AuthenticationController" class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="styles/bootstrap.min.css">
 </head>
 <body>
-
+<header>
+    <div ng-include="'app/views/navigation-header.html'"></div>
+</header>
 <div class="container">
     <div ng-view></div>
 </div>
@@ -27,11 +29,9 @@
 
 <script src="app/app.js"></script>
 
+<script src="app/services/authenticationService.js"></script>
 
-<script src="app/controllers/authentication-controller.js"></script>
-<script src="app/controllers/home-controller.js"></script>
-
-<script src="app/services/users/authentication.js"></script>
-
+<script src="app/controllers/authenticationController.js"></script>
+<script src="app/controllers/homeController.js"></script>
 </body>
 </html>
