@@ -17,6 +17,10 @@ app.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'app/views/dashboard.html',
             controller: 'HomeController'
         })
+        .when('/Account/ChangePassword',{
+            templateUrl: 'app/views/change-password.html',
+            controller: 'AuthenticationController'
+        })
         .otherwise({
             redirectTo: '/'
         });

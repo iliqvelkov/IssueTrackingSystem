@@ -17,7 +17,8 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <ul class="nav navbar-nav navbar-right">
+        <ul ng-if="isLogged()" class="nav navbar-nav navbar-right">
+            <li><a href="#/Account/ChangePassword">Change Password</a></li>
             <li ng-if="isLogged()"><a href="#/logout" ng-click="logout()">Logout</a></li>
         </ul>
     </div>

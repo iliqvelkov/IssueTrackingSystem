@@ -70,5 +70,16 @@ app.factory('authenticationService', function ($http, baseServiceUrl, $localStor
         });
     };
 
+    authenticationService.changePassword = function (userData) {
+        console.log(userData);
+        return $http({
+            method: 'POST',
+            url: baseServiceUrl + 'api/Account/ChangePassword',
+            data: userData,
+            headers: this.getHeaders()
+        });
+    };
+
+
     return authenticationService;
 });

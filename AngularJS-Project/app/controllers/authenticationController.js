@@ -12,10 +12,10 @@ app.controller('AuthenticationController',
                         username: userData.regEmail,
                         password: userData.regPassword
                     });
-                    notifyService.showInfo('success registration');
+                    notifyService.success('success registration');
                 },
                 function error(error) {
-                    notifyService.showError('User already exist or missing requirements', error);
+                    notifyService.error('User already exist or missing requirements', error);
                 }
             );
         };
@@ -24,10 +24,10 @@ app.controller('AuthenticationController',
 
             authenticationService.login(userData)
                 .then(function success(serverData) {
-                    notifyService.showInfo('Welcome');
+                    notifyService.success('Welcome');
                     $location.path("/dashboard");
                 }, function error(error) {
-                    notifyService.showError('Login failed', error)
+                    notifyService.error('Login failed', error)
                 });
         };
 
@@ -35,12 +35,24 @@ app.controller('AuthenticationController',
             authenticationService.logout().then(
                 function success(serverData) {
                     authenticationService.clearCredentials();
-                    notifyService.showInfo('logout success');
+                    notifyService.success('logout success');
                     $location.path('/');
                 },
                 function error(error) {
-                    notifyService.showError('logout failed', error);
+                    notifyService.error('logout failed', error);
                 }
             );
         };
+
+        $scope.changePassword = function (userData) {
+            authenticationService.changePassword(userData).then(
+                function success() {
+                    notifyService.success('Change password success!');
+                    $location.path('/dashboard');
+                },
+                function error(error) {
+                    notifyService.error('unable to change password!' + error);
+                }
+            )
+        }
     });
